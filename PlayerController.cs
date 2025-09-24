@@ -7,7 +7,7 @@ public class PlayerController : MonoBehaviour
     public float jumpForce;
     public GameObject proyectilPrefab;
     
-    private Transform transform;
+    private Transform trf;
     private Rigidbody2D rb;
     private Animator animator;
 
@@ -16,7 +16,7 @@ public class PlayerController : MonoBehaviour
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
-        transform = gameObject.GetComponent<Transform>();
+        trf = gameObject.GetComponent<Transform>();
         //Debug.Log("La posición de mi Player es:");
         //Debug.Log("En X: " + gameObject.GetComponent<Transform>().position.x);
         //Debug.Log("En y: " + gameObject.GetComponent<Transform>().position.y);
@@ -30,12 +30,17 @@ public class PlayerController : MonoBehaviour
        CheckAnimation();
        CheckJump();
 
-       if (Input.GetKey(KeyCode.Q))
-       {
-           Instantiate(proyectilPrefab, transform.position, Quaternion.identity);
-           
-       }
+       
 
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            animator.SetTrigger("shoot");
+            Instantiate(proyectilPrefab, transform.position, Quaternion.identity);
+        }
     }
 
     private void CheckJump()
